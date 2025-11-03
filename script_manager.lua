@@ -67,9 +67,12 @@ local function list_lua_files(folder)
             if type(path) == "string" and path:lower():sub(-4) == ".lua" then
                 if show_all or path:sub(1, #folder + 1) == folder .. "/" then
                     local base = path:match("([^/]+)$") or path
-                    if not seen[path] then
-                        seen[path] = true
-                        table.insert(items, { name = base, full = path })
+                    -- Skip listing this script manager itself
+                    if base:lower() ~= "script_manager.lua" then
+                        if not seen[path] then
+                            seen[path] = true
+                            table.insert(items, { name = base, full = path })
+                        end
                     end
                 end
             end
